@@ -4,9 +4,11 @@
     alt="Fork & Framework Banner"
     width="100%"
   />
-  
+
   <h1>🍴 Fork & Framework</h1>
   <p><i>Where ideas meet flavor</i></p>
+
+  🔗 <a href="https://your-app-link-here" target="_blank"><b>Open the App</b></a>
 </div>
 
 # 🍴 Fork and Framework
