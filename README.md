@@ -4,9 +4,6 @@
     alt="Fork & Framework Banner"
     width="100%"
   />
-  
-  <h1>🍴 Fork & Framework</h1>
-  <p><i>Where ideas meet flavor</i></p>
 </div>
 
 # 🍴 Fork and Framework
