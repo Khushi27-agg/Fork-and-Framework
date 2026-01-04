@@ -1,11 +1,3 @@
-<div align="center">
-  <img 
-    src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" 
-    alt="Fork & Framework Banner"
-    width="100%"
-  />
-</div>
-
 # 🍴 Fork and Framework
 
 Fork and Framework is an AI-powered application built using Google AI Studio.  
