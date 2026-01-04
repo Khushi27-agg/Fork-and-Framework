@@ -28,3 +28,19 @@ Follow the steps below to set up and run the project on your local machine.
 ```bash
 git clone https://github.com/Khushi27-agg/Fork-and-Framework.git
 cd Fork-and-Framework
+
+2.Install dependencies
+Copy code
+Bash
+npm install
+
+3.Set up environment variables
+Create a .env.local file and add:
+Copy code
+Env
+GEMINI_API_KEY=your_api_key_here
+
+4.Run the application
+Copy code
+Bash
+npm run dev
