@@ -5,8 +5,6 @@
 # Run and deploy your AI Studio app
 # Fork and Framework
 
-This contains everything you need to run your app locally.
-
 View your app in AI Studio: https://ai.studio/apps/drive/1VJwXqTaQk3Tu9xl_YHdR-MtSFjRzbhA1
 
 ## Run Locally
