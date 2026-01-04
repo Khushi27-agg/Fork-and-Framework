@@ -1,0 +1,7 @@
+{
+  "name": "Fork and Framework",
+  "description": "An AI-powered culinary companion that transforms your available ingredients into healthy, sustainable recipes tailored to your dietary needs.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
