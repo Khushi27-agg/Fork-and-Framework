@@ -26,9 +26,9 @@ A valid Gemini API key
 🛠️ Installation & Setup
 
 1. Clone the repository
-
-
-
+git clone https://github.com/Khushi27-agg/Fork-and-Framework.git  
+cd Fork-and-Framework  
+  
 
 
 
