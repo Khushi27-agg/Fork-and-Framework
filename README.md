@@ -32,7 +32,8 @@ npm install
 
 3.Set up environment variables
 Create a .env.local file and add:
-GEMINI_API_KEY=your_api_key_here
+- Node.js installed
+- Gemini API key (optional – for full AI functionality)
 
 4.Run the application
 npm run dev
