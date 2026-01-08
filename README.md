@@ -1,61 +1,20 @@
+<div align="center">
+<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+</div>
 
-# 🍴 Fork and Framework
+# Run and deploy your AI Studio app
 
-Fork and Framework is an AI-powered application built using Google AI Studio.  
-It explores the intersection of food and technology by using AI to intelligently generate dish-related outputs through structured prompts and creative reasoning.
+This contains everything you need to run your app locally.
 
-🔗 **Open the App:**  
-https://ai.studio/apps/drive/1VJwXqTaQk3Tu9xl_YHdR-MtSFjRzbhA1?fullscreenApplet=true
+View your app in AI Studio: https://ai.studio/apps/drive/1VJwXqTaQk3Tu9xl_YHdR-MtSFjRzbhA1
 
----
-## ✨ Features
+## Run Locally
 
-- 🍽️ **Personalized Recipe Suggestions**  
-  Recommends dishes based on user location, dietary preference, and inputs.
+**Prerequisites:**  Node.js
 
-- 🌍 **Region-Based Flavor Customization**  
-  Adapts recipes to local cuisines and ingredient availability.
 
-- 🥗 **Dietary Preference Support**  
-  Supports Vegetarian, Vegan, and Non-Vegetarian options.
-
-- ⚕️ **Health & Allergy Awareness**  
-  Allows users to specify health conditions and allergies for safer recommendations.
-
-- 🧠 **AI-Powered Reasoning**  
-  Uses structured prompts with Gemini AI to generate intelligent and creative outputs.
-
-- 🖥️ **Clean & Responsive UI**  
-  Simple, intuitive interface optimized for both mobile and desktop.
-
-- 🔐 **API-Key Safe Design**  
-  Runs without exposing API keys; AI features activate only when a key is provided.
-
-## 🚀 Run Locally
-
-Follow the steps below to set up and run the project on your local machine.
-
-### ✅ Prerequisites
-- Node.js installed
-- A valid Gemini API key
-
----
-
-## 🛠️ Installation & Setup
-
-1. **Clone the repository**
-```bash
-git clone https://github.com/Khushi27-agg/Fork-and-Framework.git  
-cd Fork-and-Framework  
-  
-
-2.Install dependecies
-npm install
-
-3.Set up environment variables
-Create a .env.local file and add:
-- Node.js installed
-- Gemini API key (optional – for full AI functionality)
-
-4.Run the application
-npm run dev
+1. Install dependencies:
+   `npm install`
+2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+3. Run the app:
+   `npm run dev`

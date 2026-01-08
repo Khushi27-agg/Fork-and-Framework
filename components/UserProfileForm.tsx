@@ -35,19 +35,20 @@ export const UserProfileForm: React.FC<Props> = ({ onComplete }) => {
 
       <div className="space-y-8">
         <div>
-          <label className="block text-sm font-bold text-stone-700 mb-2 uppercase tracking-wider">Where are you from?</label>
+          <label htmlFor="location-input" className="block text-sm font-bold text-stone-700 mb-2 uppercase tracking-wider">Where are you from?</label>
           <input
+            id="location-input"
             type="text"
             placeholder="e.g. Italy, India, New York..."
-            className="w-full px-4 py-3 rounded-xl border border-stone-200 outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition"
+            className="w-full px-4 py-3 rounded-xl border border-stone-200 outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition bg-white"
             value={profile.location}
             onChange={(e) => setProfile({ ...profile, location: e.target.value })}
           />
           <p className="text-[10px] text-stone-400 mt-1 font-medium italic">We'll use this to suggest regional flavors and local ingredient substitutes.</p>
         </div>
 
-        <div>
-          <label className="block text-sm font-bold text-stone-700 mb-2 uppercase tracking-wider">Dietary Preference</label>
+        <fieldset>
+          <legend className="block text-sm font-bold text-stone-700 mb-2 uppercase tracking-wider">Dietary Preference</legend>
           <div className="flex flex-wrap md:flex-nowrap gap-3">
             {['vegetarian', 'vegan', 'non-vegetarian'].map((d) => (
               <button
@@ -63,10 +64,10 @@ export const UserProfileForm: React.FC<Props> = ({ onComplete }) => {
               </button>
             ))}
           </div>
-        </div>
+        </fieldset>
 
-        <div>
-          <label className="block text-sm font-bold text-stone-700 mb-2 uppercase tracking-wider">Health & Allergies</label>
+        <fieldset>
+          <legend className="block text-sm font-bold text-stone-700 mb-2 uppercase tracking-wider">Health & Allergies</legend>
           <div className="flex flex-wrap gap-6 mb-4">
             <label className="flex items-center space-x-3 cursor-pointer group">
               <input
@@ -89,10 +90,12 @@ export const UserProfileForm: React.FC<Props> = ({ onComplete }) => {
           </div>
           
           <div className="flex gap-2">
+            <label htmlFor="allergy-input" className="sr-only">Add an allergy</label>
             <input
+              id="allergy-input"
               type="text"
               placeholder="Any other allergies? (e.g. Nuts, Soy)"
-              className="flex-1 px-4 py-3 rounded-xl border border-stone-200 outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition"
+              className="flex-1 px-4 py-3 rounded-xl border border-stone-200 outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition bg-white"
               value={allergyInput}
               onChange={(e) => setAllergyInput(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && addAllergy()}
@@ -108,11 +111,11 @@ export const UserProfileForm: React.FC<Props> = ({ onComplete }) => {
             {profile.allergies.map((a) => (
               <span key={a} className="bg-rose-50 text-rose-700 px-4 py-1.5 rounded-2xl text-xs font-bold flex items-center gap-2 border border-rose-100 shadow-sm animate-in zoom-in-90">
                 {a}
-                <button onClick={() => removeAllergy(a)} className="hover:text-rose-900 text-base leading-none">&times;</button>
+                <button onClick={() => removeAllergy(a)} aria-label={`Remove ${a} allergy`} className="hover:text-rose-900 text-base leading-none">&times;</button>
               </span>
             ))}
           </div>
-        </div>
+        </fieldset>
 
         <button
           onClick={() => onComplete(profile)}

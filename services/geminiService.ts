@@ -8,7 +8,7 @@ export const ai = new GoogleGenAI({ apiKey: API_KEY });
 
 export async function analyzeIngredientsFromImage(base64Data: string): Promise<string[]> {
   const response = await ai.models.generateContent({
-    model: 'gemini-3-pro-preview',
+    model: 'gemini-3-flash-preview',
     contents: {
       parts: [
         { inlineData: { data: base64Data, mimeType: 'image/jpeg' } },
@@ -47,6 +47,7 @@ export async function generateRecipe(ingredients: string[], profile: UserProfile
     Ensure it respects all dietary restrictions.
     Include a mood-specific vibe with an ambient sound suggestion (BUT NO MUSIC SUGGESTIONS).
     Provide alternative ingredient swaps for key components.
+    For each instruction step, also list the specific ingredients used in that step.
 
     The response must be a JSON object matching this schema.
   `;
@@ -63,7 +64,16 @@ export async function generateRecipe(ingredients: string[], profile: UserProfile
           title: { type: Type.STRING },
           description: { type: Type.STRING },
           ingredients: { type: Type.ARRAY, items: { type: Type.STRING } },
-          instructions: { type: Type.ARRAY, items: { type: Type.STRING } },
+          instructions: { 
+            type: Type.ARRAY, 
+            items: { 
+              type: Type.OBJECT, 
+              properties: { 
+                text: { type: Type.STRING }, 
+                ingredientsUsed: { type: Type.ARRAY, items: { type: Type.STRING } } 
+              } 
+            } 
+          },
           nutrition: {
             type: Type.OBJECT,
             properties: {
@@ -128,7 +138,7 @@ export async function generateSpeech(text: string): Promise<string | undefined> 
   const genAI = new GoogleGenAI({ apiKey: API_KEY });
   const response = await genAI.models.generateContent({
     model: "gemini-2.5-flash-preview-tts",
-    contents: [{ parts: [{ text: `Chef voice: ${text}` }] }],
+    contents: [{ parts: [{ text: `Read with extreme clarity and professional focus: ${text}` }] }],
     config: {
       responseModalities: [Modality.AUDIO],
       speechConfig: {

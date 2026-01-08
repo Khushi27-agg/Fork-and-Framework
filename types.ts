@@ -26,7 +26,10 @@ export interface Recipe {
   title: string;
   description: string;
   ingredients: string[];
-  instructions: string[];
+  instructions: {
+    text: string;
+    ingredientsUsed: string[];
+  }[];
   nutrition: NutritionInfo;
   sustainabilityFactor: string;
   sustainabilityScore: number; // 1-10
@@ -46,5 +49,6 @@ export enum AppMode {
   Onboarding = 'ONBOARDING',
   Dashboard = 'DASHBOARD',
   RecipeView = 'RECIPE_VIEW',
-  CookMode = 'COOK_MODE'
+  CookMode = 'COOK_MODE',
+  Profile = 'PROFILE'
 }
