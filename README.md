@@ -8,6 +8,28 @@ It explores the intersection of food and technology by using AI to intelligently
 https://ai.studio/apps/drive/1VJwXqTaQk3Tu9xl_YHdR-MtSFjRzbhA1?fullscreenApplet=true
 
 ---
+## ✨ Features
+
+- 🍽️ **Personalized Recipe Suggestions**  
+  Recommends dishes based on user location, dietary preference, and inputs.
+
+- 🌍 **Region-Based Flavor Customization**  
+  Adapts recipes to local cuisines and ingredient availability.
+
+- 🥗 **Dietary Preference Support**  
+  Supports Vegetarian, Vegan, and Non-Vegetarian options.
+
+- ⚕️ **Health & Allergy Awareness**  
+  Allows users to specify health conditions and allergies for safer recommendations.
+
+- 🧠 **AI-Powered Reasoning**  
+  Uses structured prompts with Gemini AI to generate intelligent and creative outputs.
+
+- 🖥️ **Clean & Responsive UI**  
+  Simple, intuitive interface optimized for both mobile and desktop.
+
+- 🔐 **API-Key Safe Design**  
+  Runs without exposing API keys; AI features activate only when a key is provided.
 
 ## 🚀 Run Locally
 
