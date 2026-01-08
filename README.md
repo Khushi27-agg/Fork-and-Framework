@@ -1,3 +1,8 @@
+# 🍴 Fork and Framework
+
+Fork and Framework is an AI-powered application built using Google AI Studio.  
+It explores the intersection of food and technology by using AI to intelligently generate dish-related outputs through structured prompts and creative reasoning.
+
 # Run and deploy the app
 
 This contains everything you need to run the app locally.
