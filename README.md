@@ -1,13 +1,12 @@
-# 🍴 Fork and Framework
+<div align="center">
+<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+</div>
 
-Fork and Framework is an AI-powered application built using Google AI Studio.  
-It explores the intersection of food and technology by using AI to intelligently generate dish-related outputs through structured prompts and creative reasoning.
+# Run and deploy your AI Studio app
 
-# Run and deploy the app
+This contains everything you need to run your app locally.
 
-This contains everything you need to run the app locally.
-
-View the app in AI Studio: https://ai.studio/apps/drive/1VJwXqTaQk3Tu9xl_YHdR-MtSFjRzbhA1
+View your app in AI Studio: https://ai.studio/apps/drive/1VJwXqTaQk3Tu9xl_YHdR-MtSFjRzbhA1
 
 ## Run Locally
 
@@ -19,26 +18,3 @@ View the app in AI Studio: https://ai.studio/apps/drive/1VJwXqTaQk3Tu9xl_YHdR-Mt
 2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
 3. Run the app:
    `npm run dev`
-
-## ✨ Features
-
-- 🍽️ **Personalized Recipe Suggestions**  
-  Recommends dishes based on user location, dietary preference, and inputs.
-
-- 🌍 **Region-Based Flavor Customization**  
-  Adapts recipes to local cuisines and ingredient availability.
-
-- 🥗 **Dietary Preference Support**  
-  Supports Vegetarian, Vegan, and Non-Vegetarian options.
-
-- ⚕️ **Health & Allergy Awareness**  
-  Allows users to specify health conditions and allergies for safer recommendations.
-
-- 🧠 **AI-Powered Reasoning**  
-  Uses structured prompts with Gemini AI to generate intelligent and creative outputs.
-
-- 🖥️ **Clean & Responsive UI**  
-  Simple, intuitive interface optimized for both mobile and desktop.
-
-- 🔐 **API-Key Safe Design**  
-  Runs without exposing API keys; AI features activate only when a key is provided.

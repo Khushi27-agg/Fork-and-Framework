@@ -1,90 +1,155 @@
-// Demo Mode Service
-// Gemini / API calls are disabled in deployed version
-// Full AI features are available in Google AI Studio
-
+import { GoogleGenAI, Type, Modality } from "@google/genai";
 import { UserProfile, Recipe, CookMood } from "../types";
 
-/**
- * Demo: Analyze ingredients from image
- */
-export async function analyzeIngredientsFromImage(
-  _base64Data: string
-): Promise<string[]> {
-  return ["Tomato", "Onion", "Olive Oil", "Garlic"];
+// Always initialize with the named parameter apiKey
+const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+
+export async function analyzeIngredientsFromImage(base64Data: string): Promise<string[]> {
+  // Using gemini-3-flash-preview for general vision tasks
+  const response = await ai.models.generateContent({
+    model: 'gemini-3-flash-preview',
+    contents: {
+      parts: [
+        { inlineData: { data: base64Data, mimeType: 'image/jpeg' } },
+        { text: "Identify all food ingredients visible in this image. Return them as a comma-separated list." }
+      ]
+    },
+    config: {
+      temperature: 0.4,
+    }
+  });
+  
+  // Use the .text property directly
+  const text = response.text || "";
+  return text.split(',').map(s => s.trim()).filter(Boolean);
 }
 
-/**
- * Demo: Generate recipe
- */
-export async function generateRecipe(
-  ingredients: string[],
-  profile: UserProfile,
-  mood: CookMood
-): Promise<Recipe> {
-  const moodMap: Record<CookMood, string> = {
-    quick: "Quick & Easy",
-    gourmet: "Gourmet Style",
-    comfort: "Comfort Food",
-    light: "Healthy & Light",
+export async function generateRecipe(ingredients: string[], profile: UserProfile, mood: CookMood): Promise<Recipe> {
+  const moodPrompts = {
+    quick: "Make it extremely 'quick and easy' with minimal steps and common pantry staples.",
+    gourmet: "Create a 'gourmet adventure' with complex techniques, layered flavors, and restaurant-quality presentation.",
+    comfort: "Focus on 'comfort food' - hearty, warm, and soul-satisfying dishes.",
+    light: "Ensure it is 'healthy and light' - fresh, nutrient-dense, and lower in calories/heavy fats."
   };
+
+  const prompt = `
+    Based on these ingredients: ${ingredients.join(', ')}.
+    User Profile:
+    - Origin/Location: ${profile.location}
+    - Diet: ${profile.diet}
+    - Allergies: ${profile.allergies.join(', ')}
+    - Health: ${profile.isDiabetic ? 'Diabetic' : ''} ${profile.isLactoseIntolerant ? 'Lactose Intolerant' : ''}
+    
+    COOK MOOD: ${moodPrompts[mood]}
+
+    Generate a healthy, sustainable recipe. 
+    IMPORTANT: Incorporate culinary influences or regional specialties associated with the user's location (${profile.location}) if it fits the ingredients.
+    Ensure it respects all dietary restrictions.
+    Include a mood-specific vibe with an ambient sound suggestion (BUT NO MUSIC SUGGESTIONS).
+    Provide alternative ingredient swaps for key components.
+    For each instruction step, also list the specific ingredients used in that step.
+
+    The response must be a JSON object matching this schema.
+  `;
+
+  // Using gemini-3-pro-preview for complex reasoning and specific JSON output
+  const response = await ai.models.generateContent({
+    model: 'gemini-3-pro-preview',
+    contents: prompt,
+    config: {
+      thinkingConfig: { thinkingBudget: 32768 },
+      responseMimeType: "application/json",
+      responseSchema: {
+        type: Type.OBJECT,
+        properties: {
+          title: { type: Type.STRING },
+          description: { type: Type.STRING },
+          ingredients: { type: Type.ARRAY, items: { type: Type.STRING } },
+          instructions: { 
+            type: Type.ARRAY, 
+            items: { 
+              type: Type.OBJECT, 
+              properties: { 
+                text: { type: Type.STRING }, 
+                ingredientsUsed: { type: Type.ARRAY, items: { type: Type.STRING } } 
+              } 
+            } 
+          },
+          nutrition: {
+            type: Type.OBJECT,
+            properties: {
+              calories: { type: Type.NUMBER },
+              protein: { type: Type.STRING },
+              carbs: { type: Type.STRING },
+              fats: { type: Type.STRING },
+              fiber: { type: Type.STRING }
+            }
+          },
+          sustainabilityFactor: { type: Type.STRING },
+          sustainabilityScore: { type: Type.NUMBER },
+          prepTime: { type: Type.STRING },
+          cookTime: { type: Type.STRING },
+          moodVibe: {
+            type: Type.OBJECT,
+            properties: {
+              ambientSound: { type: Type.STRING, description: "Background ambient sound like 'Rainy jazz cafe' or 'Bustling Italian market'" }
+            }
+          },
+          alternativeIngredients: {
+            type: Type.ARRAY,
+            items: {
+              type: Type.OBJECT,
+              properties: {
+                original: { type: Type.STRING },
+                substitute: { type: Type.STRING },
+                reason: { type: Type.STRING }
+              }
+            }
+          }
+        },
+        required: ["title", "description", "ingredients", "instructions", "nutrition", "sustainabilityFactor", "sustainabilityScore", "prepTime", "cookTime", "moodVibe", "alternativeIngredients"]
+      }
+    }
+  });
+
+  return JSON.parse(response.text || "{}");
+}
+
+export async function chatWithAI(message: string, context?: any) {
+  const response = await ai.models.generateContent({
+    model: 'gemini-3-flash-preview',
+    contents: `
+      You are an expert chef and nutritionist for the app "Fork and Framework". 
+      Help the user with their culinary questions. 
+      Context: ${JSON.stringify(context || {})}
+      User message: ${message}
+    `,
+    config: {
+      tools: [{ googleSearch: {} }]
+    }
+  });
 
   return {
-    title: `Demo Recipe – ${moodMap[mood]}`,
-    description:
-      "This is a demo preview. Full AI-powered recipe generation is available in Google AI Studio.",
-    ingredients:
-      ingredients.length > 0
-        ? ingredients
-        : ["Tomato", "Onion", "Olive Oil", "Garlic"],
-    instructions: [
-      {
-        text: "Heat olive oil and sauté onions and garlic.",
-        ingredientsUsed: ["Olive Oil", "Onion", "Garlic"],
-      },
-      {
-        text: "Add tomatoes and simmer until soft.",
-        ingredientsUsed: ["Tomato"],
-      },
-    ],
-    nutrition: {
-      calories: 220,
-      protein: "6g",
-      carbs: "28g",
-      fats: "9g",
-      fiber: "5g",
-    },
-    sustainabilityFactor: "Uses seasonal, plant-based ingredients",
-    sustainabilityScore: 8,
-    prepTime: "10 minutes",
-    cookTime: "15 minutes",
-    moodVibe: {
-      ambientSound: "Calm kitchen ambience",
-    },
-    alternativeIngredients: [
-      {
-        original: "Olive Oil",
-        substitute: "Mustard Oil",
-        reason: "Common regional alternative",
-      },
-    ],
+    text: response.text,
+    sources: response.candidates?.[0]?.groundingMetadata?.groundingChunks || []
   };
 }
 
-/**
- * Demo: Chat with AI
- */
-export async function chatWithAI(message: string) {
-  return {
-    text: `Demo response to: "${message}". Full AI chat is available in Google AI Studio.`,
-    sources: [],
-  };
-}
+export async function generateSpeech(text: string): Promise<string | undefined> {
+  // Re-initializing correctly with the required named parameter
+  const ttsAi = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  const response = await ttsAi.models.generateContent({
+    model: "gemini-2.5-flash-preview-tts",
+    contents: [{ parts: [{ text: `Read with extreme clarity and professional focus: ${text}` }] }],
+    config: {
+      responseModalities: [Modality.AUDIO],
+      speechConfig: {
+        voiceConfig: {
+          prebuiltVoiceConfig: { voiceName: 'Zephyr' },
+        },
+      },
+    },
+  });
 
-/**
- * Demo: Generate speech (disabled)
- */
-export async function generateSpeech(
-  _text: string
-): Promise<string | undefined> {
-  return undefined;
+  return response.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
 }

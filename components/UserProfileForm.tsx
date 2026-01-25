@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { UserProfile } from '../types';
 
@@ -24,94 +23,89 @@ export const UserProfileForm: React.FC<Props> = ({ onComplete }) => {
     }
   };
 
-  const removeAllergy = (a: string) => {
-    setProfile({ ...profile, allergies: profile.allergies.filter(item => item !== a) });
-  };
-
   return (
-    <div className="max-w-2xl mx-auto p-8 bg-white rounded-3xl shadow-xl border border-stone-100 animate-in fade-in zoom-in-95 duration-500">
-      <h2 className="text-3xl font-bold mb-6 text-emerald-800">Welcome to Fork & Framework</h2>
-      <p className="text-stone-600 mb-8">Let's personalize your culinary experience. We'll tailor recipes to your background and dietary needs.</p>
+    <div className="max-w-2xl mx-auto p-12 bg-white rounded-[3rem] shadow-2xl border border-stone-100 animate-in fade-in zoom-in-95 duration-700">
+      <div className="text-center mb-12">
+        <div className="w-16 h-16 bg-emerald-900 rounded-[1.5rem] flex items-center justify-center text-white text-3xl mx-auto mb-6 shadow-xl shadow-emerald-900/10">👨‍🍳</div>
+        <h2 className="text-4xl font-black text-stone-900 serif-font mb-4">Chef's Profile</h2>
+        <p className="text-stone-500 font-medium">Help us tailor your recipes to your health and heritage.</p>
+      </div>
 
-      <div className="space-y-8">
+      <div className="space-y-10">
         <div>
-          <label htmlFor="location-input" className="block text-sm font-bold text-stone-700 mb-2 uppercase tracking-wider">Where are you from?</label>
+          <label className="block text-[10px] font-black text-emerald-600 mb-3 uppercase tracking-[0.2em]">Regional Origin</label>
           <input
-            id="location-input"
             type="text"
-            placeholder="e.g. Italy, India, New York..."
-            className="w-full px-4 py-3 rounded-xl border border-stone-200 outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition bg-white"
+            placeholder="e.g. Kyoto, Tuscany, Mumbai..."
+            className="w-full px-6 py-4 rounded-2xl border border-stone-200 outline-none input-glow transition-all bg-white text-stone-800 font-medium shadow-sm"
             value={profile.location}
             onChange={(e) => setProfile({ ...profile, location: e.target.value })}
           />
-          <p className="text-[10px] text-stone-400 mt-1 font-medium italic">We'll use this to suggest regional flavors and local ingredient substitutes.</p>
         </div>
 
         <fieldset>
-          <legend className="block text-sm font-bold text-stone-700 mb-2 uppercase tracking-wider">Dietary Preference</legend>
-          <div className="flex flex-wrap md:flex-nowrap gap-3">
+          <legend className="block text-[10px] font-black text-emerald-600 mb-4 uppercase tracking-[0.2em]">Dietary Style</legend>
+          <div className="grid grid-cols-3 gap-3">
             {['vegetarian', 'vegan', 'non-vegetarian'].map((d) => (
               <button
                 key={d}
                 onClick={() => setProfile({ ...profile, diet: d as any })}
-                className={`flex-1 py-3 px-2 rounded-xl border capitalize font-bold text-sm transition ${
+                className={`py-4 px-2 rounded-2xl border text-xs font-bold transition-all capitalize ${
                   profile.diet === d
-                    ? 'bg-emerald-600 text-white border-emerald-600 shadow-md'
-                    : 'bg-stone-50 text-stone-600 border-stone-200 hover:border-emerald-300'
+                    ? 'bg-emerald-900 text-white border-emerald-900 shadow-lg shadow-emerald-900/10'
+                    : 'bg-stone-50 text-stone-500 border-stone-100 hover:border-emerald-200 hover:bg-white'
                 }`}
               >
-                {d}
+                {d.replace('-', ' ')}
               </button>
             ))}
           </div>
         </fieldset>
 
         <fieldset>
-          <legend className="block text-sm font-bold text-stone-700 mb-2 uppercase tracking-wider">Health & Allergies</legend>
-          <div className="flex flex-wrap gap-6 mb-4">
+          <legend className="block text-[10px] font-black text-emerald-600 mb-4 uppercase tracking-[0.2em]">Health Priorities</legend>
+          <div className="flex flex-wrap gap-8 mb-6">
             <label className="flex items-center space-x-3 cursor-pointer group">
               <input
                 type="checkbox"
+                className="w-5 h-5 rounded-lg border-stone-300 text-emerald-600 focus:ring-emerald-500/20"
                 checked={profile.isDiabetic}
                 onChange={(e) => setProfile({ ...profile, isDiabetic: e.target.checked })}
-                className="w-5 h-5 rounded border-stone-300 text-emerald-600 focus:ring-emerald-500 cursor-pointer"
               />
-              <span className="text-stone-700 font-medium group-hover:text-emerald-700 transition">Diabetic</span>
+              <span className="text-stone-700 font-bold text-sm group-hover:text-emerald-700 transition-colors">Diabetic Friendly</span>
             </label>
             <label className="flex items-center space-x-3 cursor-pointer group">
               <input
                 type="checkbox"
+                className="w-5 h-5 rounded-lg border-stone-300 text-emerald-600 focus:ring-emerald-500/20"
                 checked={profile.isLactoseIntolerant}
                 onChange={(e) => setProfile({ ...profile, isLactoseIntolerant: e.target.checked })}
-                className="w-5 h-5 rounded border-stone-300 text-emerald-600 focus:ring-emerald-500 cursor-pointer"
               />
-              <span className="text-stone-700 font-medium group-hover:text-emerald-700 transition">Lactose Intolerant</span>
+              <span className="text-stone-700 font-bold text-sm group-hover:text-emerald-700 transition-colors">Lactose Free</span>
             </label>
           </div>
           
-          <div className="flex gap-2">
-            <label htmlFor="allergy-input" className="sr-only">Add an allergy</label>
+          <div className="flex gap-3">
             <input
-              id="allergy-input"
               type="text"
-              placeholder="Any other allergies? (e.g. Nuts, Soy)"
-              className="flex-1 px-4 py-3 rounded-xl border border-stone-200 outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition bg-white"
+              placeholder="Allergies? (e.g. Peanuts, Shellfish)"
+              className="flex-1 px-6 py-4 rounded-2xl border border-stone-200 outline-none input-glow transition-all bg-white text-stone-800 font-medium shadow-sm"
               value={allergyInput}
               onChange={(e) => setAllergyInput(e.target.value)}
               onKeyPress={(e) => e.key === 'Enter' && addAllergy()}
             />
             <button
               onClick={addAllergy}
-              className="bg-emerald-100 text-emerald-700 px-6 py-3 rounded-xl hover:bg-emerald-200 transition font-bold text-sm"
+              className="bg-stone-900 text-white px-8 py-4 rounded-2xl hover:bg-emerald-800 transition-all font-bold text-xs uppercase tracking-widest shadow-lg"
             >
               Add
             </button>
           </div>
           <div className="flex flex-wrap gap-2 mt-4">
             {profile.allergies.map((a) => (
-              <span key={a} className="bg-rose-50 text-rose-700 px-4 py-1.5 rounded-2xl text-xs font-bold flex items-center gap-2 border border-rose-100 shadow-sm animate-in zoom-in-90">
+              <span key={a} className="bg-rose-50 text-rose-700 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest flex items-center gap-2 border border-rose-100">
                 {a}
-                <button onClick={() => removeAllergy(a)} aria-label={`Remove ${a} allergy`} className="hover:text-rose-900 text-base leading-none">&times;</button>
+                <button onClick={() => setProfile({ ...profile, allergies: profile.allergies.filter(i => i !== a) })} className="hover:text-rose-900 font-bold">×</button>
               </span>
             ))}
           </div>
@@ -120,9 +114,9 @@ export const UserProfileForm: React.FC<Props> = ({ onComplete }) => {
         <button
           onClick={() => onComplete(profile)}
           disabled={!profile.location.trim()}
-          className="w-full bg-emerald-700 text-white py-5 rounded-2xl font-bold text-lg hover:bg-emerald-800 transition shadow-xl shadow-emerald-200 active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full bg-emerald-600 text-white py-6 rounded-[2rem] font-black text-sm uppercase tracking-[0.3em] hover:bg-emerald-700 transition-all shadow-2xl shadow-emerald-200 active:scale-[0.98] disabled:opacity-20 disabled:grayscale"
         >
-          {profile.location ? "Let's Cook!" : "Please tell us where you're from"}
+          Initialize Culinary Journey
         </button>
       </div>
     </div>

@@ -46,6 +46,7 @@ export interface Recipe {
 }
 
 export enum AppMode {
+  Landing = 'LANDING',
   Onboarding = 'ONBOARDING',
   Dashboard = 'DASHBOARD',
   RecipeView = 'RECIPE_VIEW',
