@@ -1,5 +1,6 @@
 
 import React, { useEffect, useState } from "react";
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { UserProfile, AppMode, Recipe, CookMood } from "./types";
 
 import { UserProfileForm } from "./components/UserProfileForm";
@@ -377,6 +378,7 @@ const App: React.FC = () => {
           }
         />
       )}
+      <SpeedInsights />
     </div>
   );
 };
